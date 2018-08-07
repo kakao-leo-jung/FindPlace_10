@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="400dp"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/MakeAppointment_time_Button_before"
+            android:background="@drawable/before"
+            android:layout_gravity="center_vertical|left"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+
+        <TimePicker
+            android:id="@+id/MakeAppointment_time_timePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.AppCompat.Dialog"
+            android:headerAmPmTextAppearance="@style/Theme.AppCompat.Dialog"
+            >
+
+        </TimePicker>
+
+        <Button
+            android:id="@+id/MakeAppointment_time_Button_next"
+            android:background="@drawable/next"
+            android:layout_gravity="center_vertical|right"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+
+    </FrameLayout>
+
+</LinearLayout>

@@ -14,6 +14,8 @@ public class UserModel {
     private String phoneNumber;
     private String address;
     private String pushToken;
+    private String backgroundURL;
+    private String statusMessage;
 
     private Map<String, Boolean> friendUidList = new HashMap<>();
 
@@ -30,6 +32,8 @@ public class UserModel {
         this.phoneNumber = phoneNumber;
         this.address = "주소정보없음";
         this.profileURL = "사진정보없음";
+        this.statusMessage = "";
+        this.backgroundURL = "사진정보없음";
     }
 
     public UserModel(String uid, String email, String password, String nickName, String phoneNumber, String address){
@@ -38,6 +42,22 @@ public class UserModel {
     }
 
     //getter and setter
+    public String getBackgroundURL() {
+        return backgroundURL;
+    }
+
+    public void setBackgroundURL(String backgroundURL) {
+        this.backgroundURL = backgroundURL;
+    }
+
+    public String getStatusMessage() {
+        return statusMessage;
+    }
+
+    public void setStatusMessage(String statusMessage) {
+        this.statusMessage = statusMessage;
+    }
+
     public Map<String, Boolean> getFriendUidList() {
         return friendUidList;
     }

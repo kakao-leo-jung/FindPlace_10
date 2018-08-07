@@ -35,6 +35,7 @@ import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.hanium.findplace.findplace_10.models.ChatModel;
+import com.hanium.findplace.findplace_10.models.CreatingAppModel;
 import com.hanium.findplace.findplace_10.models.UserModel;
 
 import org.json.JSONException;
@@ -102,6 +103,7 @@ public class ChatActivity extends AppCompatActivity {
     private Button drawerLayout_turnBack;
     private LinearLayout drawerLayout_inviteNewMember;
     private RecyclerView drawerLayout_recyclerview_memberList;
+    private RecyclerView drawerLayout_recyclerview_creatingAppList;
     private LinearLayout drawerLayout_makeAppointment;
 
     //-----------------------------------------------------DRAWERLAYOUT MEMBERVARIABLES
@@ -140,6 +142,8 @@ public class ChatActivity extends AppCompatActivity {
                     drawerLayout.openDrawer(Gravity.RIGHT);
                     drawerLayout_recyclerview_memberList.setLayoutManager(new LinearLayoutManager(ChatActivity.this));
                     drawerLayout_recyclerview_memberList.setAdapter(new MyGroupMemberShow());
+                    drawerLayout_recyclerview_creatingAppList.setLayoutManager(new LinearLayoutManager(ChatActivity.this));
+                    drawerLayout_recyclerview_creatingAppList.setAdapter(new MyCreatingAppListShow());
                 }
             }
         });
@@ -262,9 +266,9 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //새로운 약속만들기 화면 생성.
-
-
-
+                Intent intent1 = new Intent(ChatActivity.this, MakeAppointmentActivity.class);
+                intent1.putExtra("roomUid", chatRoomUid);
+                startActivity(intent1);
 
             }
         });
@@ -285,6 +289,7 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         drawerLayout_recyclerview_memberList = (RecyclerView) findViewById(R.id.DrawerLayout_RecyclerView);
+        drawerLayout_recyclerview_creatingAppList = (RecyclerView) findViewById(R.id.DrawerLayout_RecyclerView_creatingAppList);
 
         //------------------------------------------------------------------------DRAWERLAYOUT MENU SETTINGS------------------------------------------
 
@@ -855,6 +860,85 @@ public class ChatActivity extends AppCompatActivity {
             profile = (ImageView) view.findViewById(R.id.ViewPeople_ImageView_profile);
             nickName = (TextView) view.findViewById(R.id.ViewPeople_TextView_nickname);
             nickName.setTextColor(Color.parseColor("#000000"));
+
+        }
+    }
+
+    class MyCreatingAppListShow extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+
+        List<CreatingAppModel> appModelList;
+        List<String> appModelUidList;
+
+        //constructor
+        public MyCreatingAppListShow(){
+            // set data list!
+
+            appModelList = new ArrayList<>();
+            appModelUidList = new ArrayList<>();
+            FirebaseDatabase.getInstance().getReference().child("MakingAppointments").child(chatRoomUid).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    appModelList.clear();
+                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        appModelList.add(snapshot.getValue(CreatingAppModel.class));
+                        appModelUidList.add(snapshot.getKey());
+                    }
+                    notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+
+        @NonNull
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_creatingapplist, parent, false);
+
+            return new MyCreatingAppListViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+
+            MyCreatingAppListViewHolder thisHolder = (MyCreatingAppListViewHolder)holder;
+
+            thisHolder.appNameTextView.setText(appModelList.get(position).appName);
+            thisHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    //여기에 장소 장소 설정 하는 activity를 띄워야함!
+                    Intent intent = new Intent(ChatActivity.this, SetLocationActivity.class);
+                    intent.putExtra("appUid", appModelUidList.get(position));
+                    startActivity(intent);
+
+
+                }
+            });
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return appModelList.size();
+        }
+    }
+
+    private class MyCreatingAppListViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView appNameTextView;
+        public LinearLayout linearLayout;
+
+        public MyCreatingAppListViewHolder(View view) {
+            super(view);
+
+            appNameTextView = (TextView) view.findViewById(R.id.ViewCreatingAppList_TextView_appName);
+            linearLayout = (LinearLayout) view.findViewById(R.id.ViewCreatingAppList_LinearLayout);
 
         }
     }

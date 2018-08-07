@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="400dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    >
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/MakeAppointment_date_Button_before"
+            android:background="@drawable/before"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+
+        <CalendarView
+            android:id="@+id/MakeAppointment_date_calendarView"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:weekNumberColor="#000000"
+            >
+
+        </CalendarView>
+
+        <Button
+            android:id="@+id/MakeAppointment_date_Button_next"
+            android:background="@drawable/next"
+            android:layout_width="25dp"
+            android:layout_height="25dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

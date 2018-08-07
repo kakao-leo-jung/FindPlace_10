@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="400dp">
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="새 약속을 생성하시겠습니까?"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="App Name : "
+                android:gravity="right"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/MakeAppointment_check_TextView_appName"
+                android:gravity="center"
+                android:text="약속 이름"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Category : "
+                android:gravity="right"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/MakeAppointment_check_TextView_category"
+                android:gravity="center"
+                android:text="카테고리 이름"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Time   : "
+                android:gravity="right"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/MakeAppointment_check_TextView_time"
+                android:gravity="center"
+                android:text="시간 표시"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/MakeAppointment_check_Button_create"
+                android:text="생성"
+                android:layout_marginHorizontal="10dp"
+                android:background="#797979"
+                android:layout_width="60dp"
+                android:layout_height="30dp" />
+
+            <Button
+                android:id="@+id/MakeAppointment_check_Button_cancel"
+                android:text="취소"
+                android:layout_marginHorizontal="10dp"
+                android:background="#797979"
+                android:layout_width="60dp"
+                android:layout_height="30dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/MakeAppointment_check_Button_before"
+        android:background="@drawable/before"
+        android:layout_gravity="center_vertical|left"
+        android:layout_width="25dp"
+        android:layout_height="25dp" />
+
+</FrameLayout>
