@@ -915,6 +915,7 @@ public class ChatActivity extends AppCompatActivity {
                     //여기에 장소 장소 설정 하는 activity를 띄워야함!
                     Intent intent = new Intent(ChatActivity.this, SetLocationActivity.class);
                     intent.putExtra("appUid", appModelUidList.get(position));
+                    intent.putExtra("roomUid", chatRoomUid);
                     startActivity(intent);
 
 
