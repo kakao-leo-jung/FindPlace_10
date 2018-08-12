@@ -14,7 +14,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchLocation extends AsyncTask<Void, Void, String> {
+public class SearchLocation extends AsyncTask<Void, Void, List<SetMyLocation>> {
 
     //member Variables
     private final String clientId = "uNwZ0jwOscgSGh264TFc";//애플리케이션 클라이언트 아이디값";;
@@ -22,22 +22,24 @@ public class SearchLocation extends AsyncTask<Void, Void, String> {
     private List<SetMyLocation> retLocationList;
     private String queryString;
 
+    public LocationAsyncCallback callback = null;
+
     //constructor
     public SearchLocation(){
         retLocationList = new ArrayList<>();
     }
-    public SearchLocation(String queryString){
+    public SearchLocation(String queryString, LocationAsyncCallback callback){
         this();
         this.queryString = queryString;
+        this.callback = callback;
     }
 
 
     @Override
-    public String doInBackground(Void... String) {
+    public List<SetMyLocation> doInBackground(Void... String) {
         //추후 수정해야함. 백그라운드 다른쓰레드에서 메인UI 조정할라하면 에러가 뜰수가 있다.
-        getSearchLocationList(queryString);
-        
-        return "";
+
+        return getSearchLocationList(queryString);
     }
 
     @Override
@@ -46,8 +48,10 @@ public class SearchLocation extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String s){
+    protected void onPostExecute(List<SetMyLocation> s){
         super.onPostExecute(s);
+
+        callback.getLocationList(s);
 
     }
 

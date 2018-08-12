@@ -1,9 +1,13 @@
 package com.hanium.findplace.findplace_10;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -14,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hanium.findplace.findplace_10.models.CreatingAppModel;
+import com.hanium.findplace.findplace_10.naver_api.LocationAsyncCallback;
 import com.hanium.findplace.findplace_10.naver_api.SearchLocation;
 import com.hanium.findplace.findplace_10.naver_api.SetMyLocation;
 
@@ -28,7 +33,7 @@ public class SetLocationActivity extends AppCompatActivity {
     private FrameLayout frameLayout;
     private EditText queryLocation;
     private Button searchLocation;
-    private RecyclerView locationList;
+    private RecyclerView locationList_recyclerView;
     private TextView selectedLocation;
     private Button setMyLocation;
     private Button cancel;
@@ -69,13 +74,21 @@ public class SetLocationActivity extends AppCompatActivity {
         searchLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchLocation searchLocation = new SearchLocation(queryLocation.getText().toString());
+                SearchLocation searchLocation = new SearchLocation(queryLocation.getText().toString(), new LocationAsyncCallback() {
+                    @Override
+                    public void getLocationList(List<SetMyLocation> list) {
+
+                        locationList_recyclerView.setLayoutManager(new LinearLayoutManager(SetLocationActivity.this));
+                        locationList_recyclerView.setAdapter(new MySetLocationListAdapter(list));
+
+                    }
+                });
                 searchLocation.execute();
 
             }
         });
 
-        locationList = (RecyclerView) findViewById(R.id.SetLocation_RecyclerView_locationList);
+        locationList_recyclerView = (RecyclerView) findViewById(R.id.SetLocation_RecyclerView_locationList);
         selectedLocation = (TextView) findViewById(R.id.SetLocation_TextView_selectedLocation);
 
         setMyLocation = (Button) findViewById(R.id.SetLocation_Button_setMyLocation);
@@ -103,4 +116,41 @@ public class SetLocationActivity extends AppCompatActivity {
         });
 
     }
+
+    class MySetLocationListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+
+        List<SetMyLocation> list;
+
+        //constructor
+        public MySetLocationListAdapter(List<SetMyLocation> list){
+            this.list = list;
+        }
+
+        @NonNull
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_set_location, parent, false);
+
+            return MySetLocationListViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return 0;
+        }
+    }
+
+    class MySetLocationListViewHolder extends RecyclerView.ViewHolder {
+
+        //constructor
+        public MySetLocationListViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
 }
